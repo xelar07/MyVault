@@ -15,12 +15,6 @@ type PageProps = {
 export function generateStaticParams() {
   return (actresses as any[]).map(a => ({ slug: a.slug }));
 }
-}
-
-
-import scenes from '@/data/scenes.json';
-import Image from 'next/image';
-import { notFound } from 'next/navigation';
 
 export default function Page({ params }: PageProps) {
   const actress = (actresses as any[]).find((a) => a.slug === params.slug);
