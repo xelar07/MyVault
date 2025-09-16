@@ -18,7 +18,7 @@ type Actress = {
 };
 
 export async function generateStaticParams() {
-  return (actresses as Actress[]).map((a) => ({ slug: a.slug }));
+  return (actresses as Actress[]).map(a => ({ params: { slug: a.slug } }));
 }
 
 export default async function Page({ params }: { params: { slug: string } }) {
