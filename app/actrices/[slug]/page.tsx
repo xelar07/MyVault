@@ -5,24 +5,25 @@ import actresses from '@/data/actresses.json';
 import scenes from '@/data/scenes.json';
 import type { Metadata } from 'next';
 
-type Actress = {
-  id: string;
-  name: string;
-  slug: string;
-  thumb: string;
-  profile: string;
-  country: string;
-  tags: string[];
-  alt?: string;
-  description?: string;
-};
 
-export async function generateStaticParams() {
-  return (actresses as Actress[]).map(a => ({ slug: a.slug }));
+type PageProps = {
+  params: {
+    slug: string;
+  }
 }
 
-export default async function Page({ params }: { params: { slug: string } }) {
-  const actress = (actresses as Actress[]).find((a) => a.slug === params.slug);
+export function generateStaticParams() {
+  return (actresses as any[]).map(a => ({ slug: a.slug }));
+}
+}
+
+
+import scenes from '@/data/scenes.json';
+import Image from 'next/image';
+import { notFound } from 'next/navigation';
+
+export default function Page({ params }: PageProps) {
+  const actress = (actresses as any[]).find((a) => a.slug === params.slug);
   if (!actress) notFound();
 
   const filmography = (scenes as any[]).filter((s) => (s.cast || []).includes(params.slug))
